@@ -68,6 +68,10 @@ footer {
     background-color: #71554A; /* Updated background color */
     color: #fff;
     padding: 20px 0;
+    text-align: center;
+}
+
+.footer-container{
     text-align: right;
 }
 
