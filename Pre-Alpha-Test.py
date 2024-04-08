@@ -4,10 +4,11 @@ from sklearn.model_selection import train_test_split
 from pandas import read_csv, get_dummies
 
 df = read_csv('BangladeshFloodWeatherData.csv')
-df = df.drop('Sl', axis=1) # comlumn 'Sl' has no meaning, just row number
+df = df.drop('Sl', axis=1) # column 'Sl' has no meaning, just row number
 print(df.isna().sum()) # check for missing values
 print(df.head())
-"""
+
+
 # One-hot encode the 'Station_Names' variable (same as pivoting a column)
 df = get_dummies(df, columns=['Station_Names'])
 
@@ -28,4 +29,3 @@ shap_values = explainer.shap_values(X_test)
 
 # Plot the SHAP values
 shap.summary_plot(shap_values, X_test)
-"""
