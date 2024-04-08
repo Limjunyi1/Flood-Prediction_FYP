@@ -8,11 +8,10 @@ df = df.drop('Sl', axis=1) # column 'Sl' has no meaning, just row number
 print(df.isna().sum()) # check for missing values
 print(df.head())
 
-
 # One-hot encode the 'Station_Names' variable (same as pivoting a column)
 df = get_dummies(df, columns=['Station_Names'])
 
-# Assume df is your DataFrame and "Flood?" is the target variable
+# Target variable = 'Flood?', features = all other columns
 X = df.drop('Flood?', axis=1)
 y = df['Flood?']
 
