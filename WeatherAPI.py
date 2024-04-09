@@ -1,5 +1,4 @@
 import requests
-import json
 from datetime import datetime, timedelta
 import pandas as pd
 
@@ -9,7 +8,6 @@ class WeatherAPI:
     def __init__(self, api_key):
         self.api_key = api_key
 
-    
     # Method to get forecast weather data
     def get_data_from_api(self, city, days = 1):
         # API endpoint to get forecast weather data
@@ -90,8 +88,8 @@ class WeatherAPI:
             "Relative_Humidity (%)": relative_humidity,
             "Wind_Speed (m/s)": wind_speed_mps,
             "Cloud_Coverage (Okta)": cloud_coverage,
-            "Latitude": latitude,
-            "Longitude": longitude,
+            "LATITUDE": latitude,
+            "LONGITUDE": longitude,
             "Period": period
         }
 
