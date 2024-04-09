@@ -3,16 +3,24 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
-class RandomForestPrediction:
+class RandomForestModel:
     def __init__(self):
         self.model = None
         self.X_test = None
         self.y_test = None
+        self.city_altitude = {} # Dictionary to store city names and altitudes
         self.train()
 
     def train(self):
         # Read the data into a dataframe
         dataset = read_csv('BangladeshFloodWeatherData.csv')
+
+        # Iterate over the dataset to extract city names and altitudes
+        for index, row in dataset.iterrows():
+            city_name = row['Station_Names']
+            altitude = row['ALTITUDE (m)']
+            if city_name not in self.city_altitude:
+                self.city_altitude[city_name] = altitude
 
         # Drop columns that are not needed or not provided by the Weather API
         dataset = dataset.drop(['Sl', 'Rainfall (cm)', 'Bright_Sunshine (hours/day)', 'Station_Number', 'X_COR', 'Y_COR', 'Period'], axis=1)
@@ -56,7 +64,7 @@ class RandomForestPrediction:
 # Testing the RandomForestPrediction class
 def main():
     # Create an instance of the RandomForestPrediction class
-    model = RandomForestPrediction()
+    model = RandomForestModel()
 
     # Get the test data from the instance
     X_test = model.X_test
