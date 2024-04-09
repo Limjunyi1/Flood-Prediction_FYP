@@ -4,6 +4,9 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
 class RandomForestModel:
+    # Author: LimJunYi
+    # Date: 2024-04-09
+    
     def __init__(self):
         self.model = None
         self.X_test = None
