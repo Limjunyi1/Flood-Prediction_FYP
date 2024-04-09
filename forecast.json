@@ -1,0 +1,16 @@
+{
+      "Station_Names": "Barisal",
+      "Year": "2024",
+      "Month": "04",
+      "Max_Temp (\u00b0C)": 38.2,
+      "Min_Temp (\u00b0C)": 26.2,
+      "Avg_Temp (\u00b0C)": 30.1,
+      "Rainfall (mm)": 0.1,
+      "Rainfall (cm)": 0.01,
+      "Relative_Humidity (%)": 45,
+      "Wind_Speed (m/s)": 6.305555555555555,
+      "Cloud_Coverage (Okta)": 2.6733333333333333,
+      "Latitude": 22.7,
+      "Longitude": 90.37,
+      "Period": "2024.04"
+}
