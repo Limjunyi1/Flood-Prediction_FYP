@@ -17,11 +17,9 @@
             <h2>Prediction</h2>
         </div>
         <div class="option-box">
-            <label for="option">Choose an option:</label>
-        </div>
-        <div class="location-dropdown">
-            <label for="location">Location:</label>
+            <label for="option">Choose a location:</label>
             <select id="location" name="location">
+                <option value="">Select Location</option>
             </select>
         </div>
         <div class="container" id="dynamic-content">
@@ -34,8 +32,38 @@
     </section>
     <footer>
         <div class="footer-content">
-            <a href="Main.html" class="home-button"></a> <!-- Home button -->
+            <a href="Main.html" class="home-button"></a>
         </div>
     </footer>
+
+    <script>
+        // Sample data
+        const locations = ["Location 1", "Location 2", "Location 3"];
+
+        // Function to populate dropdown with locations
+        function populateDropdown() {
+            const locationDropdown = document.getElementById('location');
+            locations.forEach(location => {
+                const option = document.createElement('option');
+                option.value = location;
+                option.textContent = location;
+                locationDropdown.appendChild(option);
+            });
+        }
+
+        // Call the function to populate dropdown on page load
+        populateDropdown();
+
+        // Function to get selected location
+        function getSelectedLocation() {
+            const locationDropdown = document.getElementById('location');
+            const selectedLocation = locationDropdown.value;
+            // Do something with the selected location
+            console.log('Selected location:', selectedLocation);
+        }
+
+        // Add event listener to detect when location is selected
+        document.getElementById('location').addEventListener('change', getSelectedLocation);
+    </script>
 </body>
 </html>
