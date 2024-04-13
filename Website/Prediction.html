@@ -27,12 +27,11 @@
             <input type="date" id="date" name="date" min="" max="">
         </form>
         <div class="container" id="dynamic-content">
-            <!-- Dynamic content will be inserted here -->
         </div>
         <div class="data-preview-header">
             <h2>Data Preview</h2>
         </div>
-        <div class="container"></div> <!-- Second container -->
+        <div class="container"></div>
     </section>
     <footer>
         <div class="footer-content">
@@ -41,7 +40,6 @@
     </footer>
 
     <script>
-        // Sample data
         const locations = ["Barisal", "Bhola", "Bogra", "Chandpur", "Chittagong (City-Ambagan)", "Chittagong (IAP-Patenga)", "Comilla", "Cox's Bazar", "Dhaka", "Dinajpur", "Faridpur", "Feni", "Hatiya", "Ishurdi", "Jessore", "Khepupara", "Khulna", "Kutubdia", "Madaripur", "Maijdee Court", "Mongla", "Mymensingh", "Patuakhali", "Rajshahi", "Rangamati", "Rangpur", "Sandwip", "Satkhira", "Sitakunda", "Srimangal", "Sylhet", "Tangail", "Teknaf"];
 
         // Function to populate dropdown with locations
@@ -55,18 +53,16 @@
             });
         }
 
-        // Call the function to populate dropdown on page load
         populateDropdown();
 
         // Function to get selected location
         function getSelectedLocation() {
             const locationDropdown = document.getElementById('location');
             const selectedLocation = locationDropdown.value;
-            // Do something with the selected location
             console.log('Selected location:', selectedLocation);
+            return selectedLocation
         }
 
-        // Add event listener to detect when location is selected
         document.getElementById('location').addEventListener('change', getSelectedLocation);
 
         // Function to get selected date
@@ -85,7 +81,7 @@
             const dateInput = document.getElementById('date');
             const today = new Date();
             const maxDate = new Date(today);
-            maxDate.setDate(today.getDate() + 14); // Adding 14 days to the current date
+            maxDate.setDate(today.getDate() + 14); 
 
             // Formatting date to YYYY-MM-DD format
             const formattedMaxDate = maxDate.toISOString().split('T')[0];
@@ -95,7 +91,7 @@
             dateInput.setAttribute('max', formattedMaxDate);
         }
 
-        // Call the function to set min and max dates on page load
+        // Calling the function to set min and max dates on page load
         setMinMaxDate();
     </script>
 </body>
