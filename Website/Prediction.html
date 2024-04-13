@@ -22,6 +22,10 @@
                 <option value="">Select Location</option>
             </select>
         </div>
+        <form action="/action_page.php">
+            <label for="birthday">Date:</label>
+            <input type="date" id="date" name="date" min="" max="">
+        </form>
         <div class="container" id="dynamic-content">
             <!-- Dynamic content will be inserted here -->
         </div>
@@ -39,7 +43,6 @@
     <script>
         // Sample data
         const locations = ["Barisal", "Bhola", "Bogra", "Chandpur", "Chittagong (City-Ambagan)", "Chittagong (IAP-Patenga)", "Comilla", "Cox's Bazar", "Dhaka", "Dinajpur", "Faridpur", "Feni", "Hatiya", "Ishurdi", "Jessore", "Khepupara", "Khulna", "Kutubdia", "Madaripur", "Maijdee Court", "Mongla", "Mymensingh", "Patuakhali", "Rajshahi", "Rangamati", "Rangpur", "Sandwip", "Satkhira", "Sitakunda", "Srimangal", "Sylhet", "Tangail", "Teknaf"];
-
 
         // Function to populate dropdown with locations
         function populateDropdown() {
@@ -65,6 +68,35 @@
 
         // Add event listener to detect when location is selected
         document.getElementById('location').addEventListener('change', getSelectedLocation);
+
+        // Function to get selected date
+        function getSelectedDate() {
+            const dateInput = document.getElementById('date');
+            const selectedDate = dateInput.value;
+            // Do something with the selected date
+            console.log('Selected date:', selectedDate);
+            return selectedDate;
+        }
+
+        document.getElementById('date').addEventListener('change', getSelectedDate);
+
+        // Function to set min and max dates for the date input field
+        function setMinMaxDate() {
+            const dateInput = document.getElementById('date');
+            const today = new Date();
+            const maxDate = new Date(today);
+            maxDate.setDate(today.getDate() + 14); // Adding 14 days to the current date
+
+            // Formatting date to YYYY-MM-DD format
+            const formattedMaxDate = maxDate.toISOString().split('T')[0];
+            const formattedToday = today.toISOString().split('T')[0];
+
+            dateInput.setAttribute('min', formattedToday);
+            dateInput.setAttribute('max', formattedMaxDate);
+        }
+
+        // Call the function to set min and max dates on page load
+        setMinMaxDate();
     </script>
 </body>
 </html>
