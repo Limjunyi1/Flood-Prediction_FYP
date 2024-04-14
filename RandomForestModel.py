@@ -2,6 +2,7 @@ from pandas import get_dummies, read_csv
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
+import shap
 
 class RandomForestModel:
     # Author: LimJunYi
@@ -12,8 +13,9 @@ class RandomForestModel:
         self.X_test = None
         self.y_test = None
         self.city_altitude = {} # Dictionary to store city names and altitudes
+        self.dataset = None
         self.train()
-
+        
     def train(self):
         # Read the data into a dataframe
         dataset = read_csv('BangladeshFloodWeatherData.csv')
@@ -31,9 +33,13 @@ class RandomForestModel:
         # One-hot encode the 'Station_Names' variable (same as pivoting a column)
         dataset_encoded = get_dummies(dataset)
 
+        # Since Weather API does not contains some cities, we need to drop the columns that are not in the API response
+        dataset_encoded = dataset_encoded.drop(['Station_Names_Srimangal', 'Station_Names_Kutubdia'], axis=1)
+
         # dependent variable = 'Flood?', independent variables = all other columns
         X = dataset_encoded.drop('Flood?', axis=1)  # Independent variables
         y = dataset_encoded['Flood?']  # Dependent variable
+        self.dataset = X
 
         # Split the data into training set and test set
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=32625510)
@@ -63,6 +69,15 @@ class RandomForestModel:
         # Get the feature importances
         feature_importances = self.model.feature_importances_
         return feature_importances
+    
+    def explain(self, X_test):
+        # Initialize the SHAP explainer
+        explainer = shap.Explainer(self.model)
+
+        # Calculate SHAP values for the test set
+        shap_values = explainer(X_test)
+
+        return shap_values
 
 # Testing the RandomForestPrediction class
 def main():
@@ -86,6 +101,10 @@ def main():
     print("Feature Importances:")
     for feature, importance in sorted_importances:
         print(f"{feature}: {importance}")
+    
+    # Explain the model predictions using SHAP
+    shap_values = model.explain(X_test)
+    shap.summary_plot(shap_values, X_test)
 
 if __name__ == "__main__":
     main()
