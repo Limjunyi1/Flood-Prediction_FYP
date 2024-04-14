@@ -12,16 +12,15 @@ class GetResult:
         self.model = RandomForestModel.RandomForestModel()
 
     # def get_user_input(self):
-    #     # Get input from the user on your website
+    #     # Get input from the user
         
     def preprocess_data(self, weather_data):
-        # drop unnecessary columns
-        weather_data = weather_data.drop(['Rainfall (cm)', 'Period'], axis=1)
-        
+
         weather_data['ALTITUDE (m)'] = weather_data['Station_Names'].map(self.model.city_altitude)
 
-        # one-hot encode the 'Station_Names' variable
-        weather_data = get_dummies(weather_data)
+        weather_data = weather_data.drop(['Station_Names', 'Rainfall (cm)', 'Period'], axis=1)
+        print(weather_data.columns)
+        print(self.model.dataset.columns)
 
         return weather_data
 
@@ -47,7 +46,7 @@ def main():
 
     # Get user input
     city = "Barisal"
-    date = "2024-04-10"
+    date = "2024-04-15"
 
     try:
         # Get the prediction result
