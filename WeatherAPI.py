@@ -76,10 +76,6 @@ class WeatherAPI:
         longitude = data["location"]["lon"]
         period = year + "." + month
 
-
-
-    
-
         # Create a dictionary to store the extracted data
         weather_data = {
             "Station_Names_Dhaka": 1 if city == "Dhaka" else 0,
@@ -115,6 +111,7 @@ class WeatherAPI:
             "Station_Names_Patuakhali": 1 if city == "Patuakhali" else 0,
             "Station_Names_Kutubdia": 1 if city == "Kutubdia" else 0,
             "Station_Names_Chittagong (City-Ambagan)": 1 if city == "Chittagong (City-Ambagan)" else 0,
+            "Station_Names": city,
             "Year": year,
             "Month": month,
             "Max_Temp (°C)": max_temp,
@@ -140,10 +137,10 @@ class WeatherAPI:
 def __main__():
     # Create an instance of WeatherAPI class
     weather = WeatherAPI("93de58fb29a54413a6064558240804")
-    city = "Dhaka"
+    city = "Chittagong (City-Ambagan)"
 
     weather = weather.get_weather_data(city, 3)
-    print(weather)
+    print(weather, city)
 
 # Run the main function   
 if __name__ == "__main__":
