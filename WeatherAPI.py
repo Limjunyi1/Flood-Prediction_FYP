@@ -95,6 +95,7 @@ class WeatherAPI:
             "Station_Names_Chandpur": 1 if city == "Chandpur" else 0,
             "Station_Names_Chittagong (City-Ambagan)": 1 if (city_input == "Chittagong (City-Ambagan)" and city == "Chittagong") else 0,
             "Station_Names_Chittagong (IAP-Patenga)": 1 if (city_input == "Chittagong (IAP-Patenga)" and city == "Chittagong") else 0,
+            "Station_Names_Comilla": 1 if city == "Comilla" else 0,
             "Station_Names_Cox's Bazar": 1 if city == "Cox's Bazar" else 0,
             "Station_Names_Dhaka": 1 if city == "Dhaka" else 0,
             "Station_Names_Dinajpur": 1 if city == "Dinajpur" else 0,
