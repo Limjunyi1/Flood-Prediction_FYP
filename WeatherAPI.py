@@ -38,10 +38,10 @@ class WeatherAPI:
         return future_date.strftime("%Y-%m-%d")
     
     # Method to process the retrived data
-    def get_weather_data(self, city, days = 1):
+    def get_weather_data(self, city_input, days = 1):
 
         # Get the forecast data from the API
-        data = self.get_data_from_api(city, days)
+        data = self.get_data_from_api(city_input, days)
 
         if data is None:
             return None
@@ -80,7 +80,6 @@ class WeatherAPI:
         weather_data = {
             "Station_Names_Dhaka": 1 if city == "Dhaka" else 0,
             "Station_Names_Dinajpur": 1 if city == "Dinajpur" else 0,
-            "Station_Names_Srimangal": 1 if city == "Srimangal" else 0,
             "Station_Names_Barisal": 1 if city == "Barisal" else 0,
             "Station_Names_Rajshahi": 1 if city == "Rajshahi" else 0,
             "Station_Names_Chandpur": 1 if city == "Chandpur" else 0,
@@ -99,7 +98,7 @@ class WeatherAPI:
             "Station_Names_Faridpur": 1 if city == "Faridpur" else 0,
             "Station_Names_Hatiya": 1 if city == "Hatiya" else 0,
             "Station_Names_Sitakunda": 1 if city == "Sitakunda" else 0,
-            "Station_Names_Chittagong (IAP-Patenga)": 1 if city == "Chittagong (IAP-Patenga)" else 0,
+            "Station_Names_Chittagong (IAP-Patenga)": 1 if (city_input == "Chittagong (IAP-Patenga)" and city == "Chittagong") else 0,
             "Station_Names_Feni": 1 if city == "Feni" else 0,
             "Station_Names_Ishurdi": 1 if city == "Ishurdi" else 0,
             "Station_Names_Cox's Bazar": 1 if city == "Cox's Bazar" else 0,
@@ -109,8 +108,7 @@ class WeatherAPI:
             "Station_Names_Madaripur": 1 if city == "Madaripur" else 0,
             "Station_Names_Teknaf": 1 if city == "Teknaf" else 0,
             "Station_Names_Patuakhali": 1 if city == "Patuakhali" else 0,
-            "Station_Names_Kutubdia": 1 if city == "Kutubdia" else 0,
-            "Station_Names_Chittagong (City-Ambagan)": 1 if city == "Chittagong (City-Ambagan)" else 0,
+            "Station_Names_Chittagong (City-Ambagan)": 1 if (city_input == "Chittagong (City-Ambagan)" and city == "Chittagong") else 0,
             "Station_Names": city,
             "Year": year,
             "Month": month,
@@ -137,7 +135,7 @@ class WeatherAPI:
 def __main__():
     # Create an instance of WeatherAPI class
     weather = WeatherAPI("93de58fb29a54413a6064558240804")
-    city = "Chittagong (City-Ambagan)"
+    city = "Chittagong (IAP-Patenga)"
 
     weather = weather.get_weather_data(city, 3)
     print(weather, city)
