@@ -38,10 +38,10 @@ class WeatherAPI:
         return future_date.strftime("%Y-%m-%d")
     
     # Method to process the retrived data
-    def get_weather_data(self, city, days = 1):
+    def get_weather_data(self, city_input, days = 1):
 
         # Get the forecast data from the API
-        data = self.get_data_from_api(city, days)
+        data = self.get_data_from_api(city_input, days)
 
         if data is None:
             return None
@@ -78,52 +78,50 @@ class WeatherAPI:
 
         # Create a dictionary to store the extracted data
         weather_data = {
-            "Station_Names_Dhaka": 1 if city == "Dhaka" else 0,
-            "Station_Names_Dinajpur": 1 if city == "Dinajpur" else 0,
-            "Station_Names_Srimangal": 1 if city == "Srimangal" else 0,
-            "Station_Names_Barisal": 1 if city == "Barisal" else 0,
-            "Station_Names_Rajshahi": 1 if city == "Rajshahi" else 0,
-            "Station_Names_Chandpur": 1 if city == "Chandpur" else 0,
-            "Station_Names_Sylhet": 1 if city == "Sylhet" else 0,
-            "Station_Names_Maijdee Court": 1 if city == "Maijdee Court" else 0,
-            "Station_Names_Rangpur": 1 if city == "Rangpur" else 0,
-            "Station_Names_Mongla": 1 if city == "Mongla" else 0,
-            "Station_Names_Jessore": 1 if city == "Jessore" else 0,
-            "Station_Names_Rangamati": 1 if city == "Rangamati" else 0,
-            "Station_Names_Bhola": 1 if city == "Bhola" else 0,
-            "Station_Names_Bogra": 1 if city == "Bogra" else 0,
-            "Station_Names_Comilla": 1 if city == "Comilla" else 0,
-            "Station_Names_Mymensingh": 1 if city == "Mymensingh" else 0,
-            "Station_Names_Khulna": 1 if city == "Khulna" else 0,
-            "Station_Names_Satkhira": 1 if city == "Satkhira" else 0,
-            "Station_Names_Faridpur": 1 if city == "Faridpur" else 0,
-            "Station_Names_Hatiya": 1 if city == "Hatiya" else 0,
-            "Station_Names_Sitakunda": 1 if city == "Sitakunda" else 0,
-            "Station_Names_Chittagong (IAP-Patenga)": 1 if city == "Chittagong (IAP-Patenga)" else 0,
-            "Station_Names_Feni": 1 if city == "Feni" else 0,
-            "Station_Names_Ishurdi": 1 if city == "Ishurdi" else 0,
-            "Station_Names_Cox's Bazar": 1 if city == "Cox's Bazar" else 0,
-            "Station_Names_Tangail": 1 if city == "Tangail" else 0,
-            "Station_Names_Khepupara": 1 if city == "Khepupara" else 0,
-            "Station_Names_Sandwip": 1 if city == "Sandwip" else 0,
-            "Station_Names_Madaripur": 1 if city == "Madaripur" else 0,
-            "Station_Names_Teknaf": 1 if city == "Teknaf" else 0,
-            "Station_Names_Patuakhali": 1 if city == "Patuakhali" else 0,
-            "Station_Names_Kutubdia": 1 if city == "Kutubdia" else 0,
-            "Station_Names_Chittagong (City-Ambagan)": 1 if city == "Chittagong (City-Ambagan)" else 0,
-            "Station_Names": city,
             "Year": year,
             "Month": month,
             "Max_Temp (°C)": max_temp,
             "Min_Temp (°C)": min_temp,
             "Avg_Temp (°C)": avg_temp,
             "Rainfall (mm)": rainfall_mm,
-            "Rainfall (cm)": rainfall_cm,
             "Relative_Humidity (%)": relative_humidity,
             "Wind_Speed (m/s)": wind_speed_mps,
             "Cloud_Coverage (Okta)": cloud_coverage,
             "LATITUDE": latitude,
             "LONGITUDE": longitude,
+            "Station_Names_Barisal": 1 if city == "Barisal" else 0,
+            "Station_Names_Bhola": 1 if city == "Bhola" else 0,
+            "Station_Names_Bogra": 1 if city == "Bogra" else 0,
+            "Station_Names_Chandpur": 1 if city == "Chandpur" else 0,
+            "Station_Names_Chittagong (City-Ambagan)": 1 if (city_input == "Chittagong (City-Ambagan)" and city == "Chittagong") else 0,
+            "Station_Names_Chittagong (IAP-Patenga)": 1 if (city_input == "Chittagong (IAP-Patenga)" and city == "Chittagong") else 0,
+            "Station_Names_Comilla": 1 if city == "Comilla" else 0,
+            "Station_Names_Cox's Bazar": 1 if city == "Cox's Bazar" else 0,
+            "Station_Names_Dhaka": 1 if city == "Dhaka" else 0,
+            "Station_Names_Dinajpur": 1 if city == "Dinajpur" else 0,
+            "Station_Names_Faridpur": 1 if city == "Faridpur" else 0,
+            "Station_Names_Feni": 1 if city == "Feni" else 0,
+            "Station_Names_Hatiya": 1 if city == "Hatiya" else 0,
+            "Station_Names_Ishurdi": 1 if city == "Ishurdi" else 0,
+            "Station_Names_Jessore": 1 if city == "Jessore" else 0,
+            "Station_Names_Khepupara": 1 if city == "Khepupara" else 0,
+            "Station_Names_Khulna": 1 if city == "Khulna" else 0,
+            "Station_Names_Madaripur": 1 if city == "Madaripur" else 0,
+            "Station_Names_Maijdee Court": 1 if city == "Maijdee Court" else 0,
+            "Station_Names_Mongla": 1 if city == "Mongla" else 0,
+            "Station_Names_Mymensingh": 1 if city == "Mymensingh" else 0,
+            "Station_Names_Patuakhali": 1 if city == "Patuakhali" else 0,
+            "Station_Names_Rajshahi": 1 if city == "Rajshahi" else 0,
+            "Station_Names_Rangamati": 1 if city == "Rangamati" else 0,
+            "Station_Names_Rangpur": 1 if city == "Rangpur" else 0,
+            "Station_Names_Sandwip": 1 if city == "Sandwip" else 0,
+            "Station_Names_Satkhira": 1 if city == "Satkhira" else 0,
+            "Station_Names_Sitakunda": 1 if city == "Sitakunda" else 0,
+            "Station_Names_Sylhet": 1 if city == "Sylhet" else 0,
+            "Station_Names_Tangail": 1 if city == "Tangail" else 0,
+            "Station_Names_Teknaf": 1 if city == "Teknaf" else 0,
+            "Station_Names": city,
+            "Rainfall (cm)": rainfall_cm,
             "Period": period
         }
 
@@ -137,7 +135,7 @@ class WeatherAPI:
 def __main__():
     # Create an instance of WeatherAPI class
     weather = WeatherAPI("93de58fb29a54413a6064558240804")
-    city = "Chittagong (City-Ambagan)"
+    city = "Chittagong (IAP-Patenga)"
 
     weather = weather.get_weather_data(city, 3)
     print(weather, city)
