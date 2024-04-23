@@ -25,6 +25,7 @@
         <form action="/action_page.php">
             <label for="birthday">Date:</label>
             <input type="date" id="date" name="date" min="" max="">
+            <button type="submit" id="submit-btn">Submit</button>
         </form>
         <div class="container" id="dynamic-content">
         </div>
@@ -93,6 +94,36 @@
 
         // Calling the function to set min and max dates on page load
         setMinMaxDate();
+
+        // Function to handle form submission
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Prevents the default form submission behavior
+            
+            const selectedLocation = getSelectedLocation();
+            const selectedDate = getSelectedDate();
+        
+            // Your fetch request here
+            fetch('/get_result', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    location: selectedLocation,
+                    date: selectedDate
+                })
+            })
+            .then(response => {
+                // Handle response from server
+                console.log('Server response:', response);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        
+        // Adding event listener to the submit button
+        document.getElementById('submit-btn').addEventListener('click', handleFormSubmit);
     </script>
 </body>
 </html>
