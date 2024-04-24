@@ -97,9 +97,9 @@ class RandomForestModel:
 
         for pred, prob in zip(predictions, probabilities):
             if pred == 1:  # flood
-                result.append(('flood', prob[1]))
+                result += ['flood', prob[1]]
             else:  # no flood
-                result.append(('no flood', prob[0]))
+                result += ['no flood', prob[0]]
         return result
 
 # Testing the RandomForestPrediction class
