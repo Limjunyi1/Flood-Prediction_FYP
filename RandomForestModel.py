@@ -39,7 +39,7 @@ class RandomForestModel:
         dataset = dataset.drop(['Sl', 'Rainfall (cm)', 'Bright_Sunshine (hours/day)', 'Station_Number', 'X_COR', 'Y_COR', 'Period'], axis=1)
 
         # One-hot encode the 'Station_Names' variable (same as pivoting a column)
-        dataset_encoded = get_dummies(dataset)
+        dataset_encoded = get_dummies(dataset, dtype="int64")
 
         # Since Weather API does not contains some cities, we need to drop the columns that are not in the API response
         dataset_encoded = dataset_encoded.drop(['Station_Names_Srimangal', 'Station_Names_Kutubdia'], axis=1)
@@ -101,15 +101,6 @@ class RandomForestModel:
             else:  # no flood
                 result.append(('no flood', prob[0]))
         return result
-    
-    def XAI_explain(self, X_test):
-        # Initialize the SHAP explainer
-        explainer = shap.Explainer(self.model)
-
-        # Calculate SHAP values for the test set
-        shap_values = explainer(X_test)
-
-        return shap_values
 
 # Testing the RandomForestPrediction class
 def main():
@@ -123,10 +114,6 @@ def main():
     # Evaluate the model and get the accuracy score
     accuracy = model.evaluate(X_test, y_test)
     print(f"Accuracy: {accuracy}")
-
-    # # XAI Explanation
-    # shap_values = model.XAI_explain(X_test)
-    # shap.summary_plot(shap_values, X_test)
 
     # Get the feature importances
     feature_importances = model.get_feature_importance()
