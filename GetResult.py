@@ -16,11 +16,9 @@ class GetResult:
         
     def preprocess_data(self, weather_data):
 
-        weather_data['ALTITUDE (m)'] = weather_data['Station_Names'].map(self.model.city_altitude)
+        weather_data.insert(11, 'ALTITUDE (m)', weather_data['Station_Names'].map(self.model.city_altitude))
 
         weather_data = weather_data.drop(['Station_Names', 'Rainfall (cm)', 'Period'], axis=1)
-        print(weather_data.columns)
-        print(self.model.dataset.columns)
 
         return weather_data
 
@@ -35,7 +33,7 @@ class GetResult:
         
         weather_data = self.weather_api.get_weather_data(city, days_difference)  # Call the weather API function
         preprocessed_data = self.preprocess_data(weather_data)
-        result = self.model.predict(preprocessed_data)
+        result = self.model.predict_proba(preprocessed_data)
         
         # return the result
         return result
@@ -45,8 +43,8 @@ def main():
     result = GetResult()
 
     # Get user input
-    city = "Barisal"
-    date = "2024-04-15"
+    city = "Dhaka"
+    date = "2024-04-25"
 
     try:
         # Get the prediction result
