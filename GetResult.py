@@ -2,6 +2,7 @@ from pandas import get_dummies
 import WeatherAPI
 import RandomForestModel
 import datetime
+import shap
 
 class GetResult:
     # Author: LimJunYi
@@ -34,22 +35,30 @@ class GetResult:
         weather_data = self.weather_api.get_weather_data(city, days_difference)  # Call the weather API function
         preprocessed_data = self.preprocess_data(weather_data)
         result = self.model.predict_proba(preprocessed_data)
+
+        # Create a masker object for SHAP
+        masker = shap.maskers.Independent(preprocessed_data)
+
+        # Explain the prediction using SHAP
+        explainer = shap.Explainer(self.model.predict, masker=masker)
+        shap_values = explainer(preprocessed_data)
         
-        # return the result
-        return result
+        # Return the result and SHAP values
+        return result, shap_values
     
 def main():
     # Create an instance of GetResult class
     result = GetResult()
 
     # Get user input
-    city = "Dhaka"
+    city = "Maijdee Court"
     date = "2024-04-25"
 
     try:
-        # Get the prediction result
-        prediction = result.get_prediction_result(city, date)
+        # Get the prediction result and SHAP values
+        prediction, shap_values = result.get_prediction_result(city, date)
         print("Prediction:", prediction)
+        print("SHAP Values:", shap_values)
     except ValueError as e:
         print("Error:", str(e))
 
