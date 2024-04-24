@@ -11,9 +11,6 @@ class GetResult:
     def __init__(self):
         self.weather_api = WeatherAPI.WeatherAPI("93de58fb29a54413a6064558240804")
         self.model = RandomForestModel.RandomForestModel()
-
-    # def get_user_input(self):
-    #     # Get input from the user
         
     def preprocess_data(self, weather_data):
 
@@ -36,15 +33,18 @@ class GetResult:
         preprocessed_data = self.preprocess_data(weather_data)
         result = self.model.predict_proba(preprocessed_data)
 
-        # Create a masker object for SHAP
-        masker = shap.maskers.Independent(preprocessed_data)
+        shap_result = self.SHAP_explain(preprocessed_data)
+
+        return result, shap_result
+    
+    def SHAP_explain(self, data):
+        # Create a tree explainer for the random forest model
+        explainer = shap.TreeExplainer(self.model.model)
 
         # Explain the prediction using SHAP
-        explainer = shap.Explainer(self.model.predict, masker=masker)
-        shap_values = explainer(preprocessed_data)
-        
-        # Return the result and SHAP values
-        return result, shap_values
+        shap_values = explainer.shap_values(data)
+
+        return shap_values
     
 def main():
     # Create an instance of GetResult class
@@ -52,13 +52,13 @@ def main():
 
     # Get user input
     city = "Maijdee Court"
-    date = "2024-04-25"
+    date = "2024-05-01"
 
     try:
         # Get the prediction result and SHAP values
-        prediction, shap_values = result.get_prediction_result(city, date)
+        prediction, shapr = result.get_prediction_result(city, date)
         print("Prediction:", prediction)
-        print("SHAP Values:", shap_values)
+        print("SHAP values:", shapr)
     except ValueError as e:
         print("Error:", str(e))
 
