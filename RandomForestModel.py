@@ -39,7 +39,7 @@ class RandomForestModel:
         dataset = dataset.drop(['Sl', 'Rainfall (cm)', 'Bright_Sunshine (hours/day)', 'Station_Number', 'X_COR', 'Y_COR', 'Period'], axis=1)
 
         # One-hot encode the 'Station_Names' variable (same as pivoting a column)
-        dataset_encoded = get_dummies(dataset, dtype="int64")
+        dataset_encoded = get_dummies(dataset)
 
         # Since Weather API does not contains some cities, we need to drop the columns that are not in the API response
         dataset_encoded = dataset_encoded.drop(['Station_Names_Srimangal', 'Station_Names_Kutubdia'], axis=1)
