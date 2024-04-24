@@ -78,8 +78,8 @@ class WeatherAPI:
 
         # Create a dictionary to store the extracted data
         weather_data = {
-            "Year": year,
-            "Month": month,
+            "Year": int(year),
+            "Month": int(month),
             "Max_Temp (°C)": max_temp,
             "Min_Temp (°C)": min_temp,
             "Avg_Temp (°C)": avg_temp,
