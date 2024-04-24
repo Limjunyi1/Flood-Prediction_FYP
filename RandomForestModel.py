@@ -22,7 +22,6 @@ class RandomForestModel:
         self.X_test = None
         self.y_test = None
         self.city_altitude = {} # Dictionary to store city names and altitudes
-        self.dataset = None
         self.train()
 
     def data_preprocessing(self, dataset):
@@ -58,7 +57,6 @@ class RandomForestModel:
         # dependent variable = 'Flood?', independent variables = all other columns
         X = dataset_encoded.drop('Flood?', axis=1)  # Independent variables
         y = dataset_encoded['Flood?']  # Dependent variable
-        self.dataset = X
 
         # Split the data into training set and test set
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.35, random_state=32625510)
