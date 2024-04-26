@@ -103,24 +103,27 @@
             const selectedDate = getSelectedDate();
         
             // Your fetch request here
-            fetch('/get_result', {
+            fetch('http://127.0.0.1:5000/predict', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    location: selectedLocation,
+                    city: selectedLocation,
                     date: selectedDate
                 })
             })
-            .then(response => {
-                // Handle response from server
-                console.log('Server response:', response);
+            .then(response => response.json())
+            .then(prediction => {
+                // Display prediction result
+                document.getElementById('dynamic-content').innerHTML = 'Prediction Result: ' + JSON.stringify(prediction);
             })
             .catch(error => {
                 console.error('Error:', error);
+                document.getElementById('dynamic-content').innerHTML = 'An error occurred.' + error;
             });
         }
+
         
         // Adding event listener to the submit button
         document.getElementById('submit-btn').addEventListener('click', handleFormSubmit);

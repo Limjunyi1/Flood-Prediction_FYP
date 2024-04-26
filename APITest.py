@@ -6,7 +6,7 @@ url = 'http://127.0.0.1:5000/predict'
 # Define the input data (city and date)
 data = {
     'city': 'Dhaka',  # Replace 'YourCity' with the actual city name
-    'date': '2024-04-25'  # Replace 'YYYY-MM-DD' with the actual date
+    'date': '2024-04-27'  # Replace 'YYYY-MM-DD' with the actual date
 }
 
 # Send a POST request to the Flask API endpoint
