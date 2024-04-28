@@ -3,13 +3,12 @@ from pandas import get_dummies, read_csv
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
-import shap
 
 # Define the RandomForestModel class
 class RandomForestModel:
     """
     Author: LimJunYi
-    Date: 2024-04-09
+    Date Created: 2024-04-09
     A class to represent a Random Forest model for flood prediction.
     """
     
@@ -70,11 +69,19 @@ class RandomForestModel:
         self.model.fit(X_train, y_train)
     
     def predict(self, new_data):
+        """
+        Created by: LimJunYi
+        Make predictions using the Random Forest model.
+        """
         # Make predictions
         predictions = self.model.predict(new_data)
         return predictions
     
     def evaluate(self, X_test, y_test):
+        """
+        Created by: LimJunYi
+        Evaluate the Random Forest model using the test set.
+        """
         # Predict the test set
         y_pred = self.model.predict(X_test)
 
@@ -83,18 +90,28 @@ class RandomForestModel:
         return accuracy
     
     def get_feature_importance(self):
+        """
+        Created by: LimJunYi
+        Get the feature importances from the Random Forest model.
+        """
         # Get the feature importances
         feature_importances = self.model.feature_importances_
         return feature_importances
     
     def predict_proba(self, weather_data):
+        """
+        Created by: LimJunYi
+        Make predictions using the Random Forest model and return the probabilities(how confidence is the prediction from the model).
+        """
         if self.model is None:
             raise Exception("Model is not trained yet. Train the model before prediction.")
         
+        # Get the predictions and probabilities
         probabilities = self.model.predict_proba(weather_data)
         predictions = self.model.predict(weather_data)
         result = []
 
+        # combine results for output
         for pred, prob in zip(predictions, probabilities):
             if pred == 1:  # flood
                 result += ['flood', prob[1]]
@@ -104,6 +121,10 @@ class RandomForestModel:
 
 # Testing the RandomForestPrediction class
 def main():
+    """
+    Created by: LimJunYi
+    Main function to test the RandomForestModel class.
+    """
     # Create an instance of the RandomForestPrediction class
     model = RandomForestModel()
 
