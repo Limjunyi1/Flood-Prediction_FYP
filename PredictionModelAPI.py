@@ -21,7 +21,7 @@ def predict():
     global shap_table
     shap_table = prediction[1]
     
-    return jsonify(prediction[0])
+    return jsonify([prediction[0],prediction[1]])
 
 @app.route('/graph', methods=['GET'])
 def get_graph():
