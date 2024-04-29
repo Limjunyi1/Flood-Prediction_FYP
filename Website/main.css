@@ -95,7 +95,6 @@ button:hover::before{
 
 button:hover {
     -webkit-box-shadow: 0 0 10px 3596cf, 0 0 40px 3596cf, 0 0 80px 3596cf;
-    /* background-color: #3596cf; */
     box-shadow: 0 0 10px #cf649a, 0 0 40px #cf649a, 0 0 80px #cf649a;
 }
 

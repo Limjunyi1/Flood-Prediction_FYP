@@ -27,7 +27,7 @@
             <input type="date" id="date" name="date" min="" max="">
             <button type="submit" id="submit-btn">Submit</button>
         </form>
-        <div class="container" id="dynamic-content">
+        <div class="result" id="result">
         </div>
         <div class="shap-graph-header">
             <h2>SHAP Table</h2>
@@ -152,7 +152,7 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('dynamic-content').innerHTML = 'An error occurred.' + error;
+                document.getElementById('result').innerHTML = 'An error occurred.' + error;
             });
         }
 

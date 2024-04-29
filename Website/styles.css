@@ -2,11 +2,16 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #E2D0C8;
+    background-image: url('flood1.png'); 
+    background-size: cover;
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    height: 100vh;
+    background-blend-mode:saturation;
+    background-color: rgba(0, 0, 255, 0.5);
 }
 
 header {
-    background-color: #A9806F; 
     color: #fff;
     padding: 20px 0;
     text-align: center;
@@ -19,6 +24,7 @@ header {
 .body-section {
     padding: 20px 0;
     text-align: center;
+    color:#fff
 }
 
 
@@ -28,15 +34,26 @@ header {
 
 .prediction-header h2,
 .data-preview-header h2 {
-    color: #71554A; 
+    color: #fff; 
 }
 
 .container {
-    max-width: 800px; 
+    width: 30%;
+    max-width: 100%;
     margin: 0 auto;
-    border: 2px solid #A9806F; 
+    border: 2px solid black;
     border-radius: 10px;
     padding: 20px;
+    background-color:#3596cf;
+}
+
+.result{
+    width: 30%;
+    margin: 0 auto;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    background-color:#3596cf;
 }
 
 h2 {
@@ -45,7 +62,6 @@ h2 {
 }
 
 footer {
-    background-color: #71554A; 
     color: #fff;
     padding: 20px;
     text-align: right;
@@ -56,15 +72,23 @@ footer {
 }
 
 .home-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #3596cf;
     color: #fff;
-    text-decoration: none;
-    padding: 8px 16px;
-    background-color: #A9806F; /* Light brown */
+    border: none;
     border-radius: 5px;
+    cursor: pointer;
+    -webkit-transition: 0.8s;
+    -o-transition: 0.8s;
+    transition: 0.8s;
+    border-radius: 40px 40px 40px 40px;
+    -webkit-box-shadow: 0 0 10px 3596cf, 0 0 40px 3596cf, 0 0 80px 3596cf;
+    box-shadow:  0 0 10px 3596cf, 0 0 40px 3596cf, 0 0 80px 3596cf;
 }
 
-.home-button:hover {
-    background-color: #543F36; /* Darker brown */
+.home-button:hover::before {
+    height: 180%
 }
 
 .home-button::before {
@@ -73,4 +97,10 @@ footer {
     margin-right: 8px;
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
+}
+
+.home-button:hover {
+    -webkit-box-shadow: 0 0 10px 3596cf, 0 0 40px 3596cf, 0 0 80px 3596cf;
+    /* background-color: #3596cf; */
+    box-shadow: 0 0 10px #cf649a, 0 0 40px #cf649a, 0 0 80px #cf649a;
 }
