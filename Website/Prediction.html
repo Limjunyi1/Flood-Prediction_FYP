@@ -46,6 +46,7 @@
 
     <script>
         const locations = ["Barisal", "Bhola", "Bogra", "Chandpur", "Chittagong (City-Ambagan)", "Chittagong (IAP-Patenga)", "Comilla", "Cox's Bazar", "Dhaka", "Dinajpur", "Faridpur", "Feni", "Hatiya", "Ishurdi", "Jessore", "Khepupara", "Khulna",  "Madaripur", "Maijdee Court", "Mongla", "Mymensingh", "Patuakhali", "Rajshahi", "Rangamati", "Rangpur", "Sandwip", "Satkhira", "Sitakunda",  "Sylhet", "Tangail", "Teknaf"];
+        const flood = false;
 
         // Function to populate dropdown with locations
         function populateDropdown() {
@@ -119,6 +120,10 @@
             })
             .then(response => response.json())
             .then(prediction => {
+                if (prediction[0][0] == "flood")
+                {
+                    flood = true;
+                }
                 // Display prediction result
                 document.getElementById('dynamic-content').innerHTML = 'Prediction Result: ' + JSON.stringify(prediction[0]);
 
@@ -158,37 +163,46 @@
         const headerRow = document.createElement("tr");
         
         // Add column name for the first column only
-        const firstColumnName = data[0][0];
         const th1 = document.createElement("th");
         th1.textContent = "Attributes";
         headerRow.appendChild(th1);
         
-        const SecondColumnName = data[0][1];
         const th2 = document.createElement("th");
-        th2.textContent = "No Flood";
+        th2.textContent = "SHAP Value";
         headerRow.appendChild(th2);
 
-        const ThirdColumnName = data[0][2];
-        const th3 = document.createElement("th");
-        th3.textContent = "Flood";
-        headerRow.appendChild(th3);
 
         table.appendChild(headerRow);
 
         // Loop through each row in the data array (starting from index 1 to skip the column names row)
-        for (let i = 1; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
             const rowData = data[i];
             const row = document.createElement("tr");
 
-            // Loop through each cell in the row
-            rowData.forEach(cellData => {
-            const cell = document.createElement("td");
-            cell.textContent = cellData;
-            row.appendChild(cell);
-            });
+        // Conditionally select columns based on the value of 'flood'
+        if (flood) {
+            // Take first and third column
+            const cell1 = document.createElement("td");
+            cell1.textContent = rowData[0]; // Assuming first column data is at index 0
+            row.appendChild(cell1);
 
-            table.appendChild(row);
+            const cell3 = document.createElement("td");
+            cell3.textContent = rowData[2]; // Assuming third column data is at index 2
+            row.appendChild(cell3);
+        } else {
+            // Take first and second column
+            const cell1 = document.createElement("td");
+            cell1.textContent = rowData[0]; // Assuming first column data is at index 0
+            row.appendChild(cell1);
+
+            const cell2 = document.createElement("td");
+            cell2.textContent = rowData[1]; // Assuming second column data is at index 1
+            row.appendChild(cell2);
         }
+
+        table.appendChild(row);
+        }
+
 
         return table;
     }
