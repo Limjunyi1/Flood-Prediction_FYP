@@ -73,7 +73,8 @@ class GetResult:
         # Output the SHAP values for each feature
         shap_table = []
         for i, feature in enumerate(data.columns):
-            shap_table.append([f"{feature}", f"{shap_values[0, i, 0]} (no flood)", f"{shap_values[0, i, 1]} (flood)"])
+            # First value is for 'no flood' and second value is for 'flood'
+            shap_table.append([f"{feature}", f"{shap_values[0, i, 0]}", f"{shap_values[0, i, 1]}"])
 
         return shap_table
 
