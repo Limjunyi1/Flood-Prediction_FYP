@@ -32,7 +32,7 @@
         <div class="data-preview-header">
             <h2>Data Preview</h2>
         </div>
-        <div class="container"></div>
+        <div class="container" id = "data-preview"></div>
     </section>
     <footer>
         <div class="footer-content">
@@ -117,6 +117,26 @@
             .then(prediction => {
                 // Display prediction result
                 document.getElementById('dynamic-content').innerHTML = 'Prediction Result: ' + JSON.stringify(prediction);
+
+                // Fetch graph
+                fetch('http://127.0.0.1:5000/graph')
+                .then(response => response.blob())
+                .then(blob => {
+                    // Convert blob to URL
+                    const imageUrl = URL.createObjectURL(blob);
+                    
+                    // Create an image element
+                    const imageElement = document.createElement('img');
+                    imageElement.src = imageUrl;
+
+                    // Append image to the DOM
+                    document.getElementById('data-preview').innerHTML = '';
+                    document.getElementById('data-preview').appendChild(imageElement);
+                })
+                .catch(error => {
+                    console.error('Error fetching graph:', error);
+                    document.getElementById('data-preview').innerHTML = 'An error occurred while fetching the graph.';
+                });
             })
             .catch(error => {
                 console.error('Error:', error);
