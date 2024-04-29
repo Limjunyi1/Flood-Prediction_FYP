@@ -62,6 +62,7 @@ h2 {
 }
 
 footer {
+    bottom:0;
     color: #fff;
     padding: 20px;
     text-align: right;
