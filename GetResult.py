@@ -73,7 +73,10 @@ class GetResult:
         # Output the SHAP values for each feature
         shap_table = []
         for i, feature in enumerate(data.columns):
-            # First value is for 'no flood' and second value is for 'flood'
+            # Remove the 'Station_Name' prefix from the feature names
+            if feature.startswith('Station_Names'):
+                feature = feature.split('_')[-1]
+            # Second column is for 'no flood' and third column is for 'flood'
             shap_table.append([f"{feature}", f"{shap_values[0, i, 0]}", f"{shap_values[0, i, 1]}"])
 
         return shap_table
@@ -86,31 +89,46 @@ class GetResult:
         Output the graph as an image file.
         """
         # Get the predictors
-        features = [f[0] for f in shap_table]
+        # Remove the 'Station_Name' prefix from the feature names
+        features = [f[0].split('_')[-1] if f[0].startswith('Station_Names') else f[0] for f in shap_table]
         
         # Plot the bar graph based on prediction
         if prediction == "no flood":
             # Get SHAP values for "no flood" prediction
             no_flood_values = [float(f[1].split()[0]) for f in shap_table]
-            plt.figure(figsize=(10, 6))
+
+            # Get the maximum and minimum SHAP values and their corresponding features
+            max_shap_value, max_feature = max(zip(no_flood_values, features))
+            min_shap_value, min_feature = min(zip(no_flood_values, features))
+
+            plt.figure(figsize=(12, 8))
             plt.bar(features, no_flood_values, label='Features Relevances to No Flood')
             plt.xlabel('Features')
             plt.ylabel('SHAP Values')
             plt.title('SHAP Values for No Flood Prediction')
+            plt.axhline(y=max_shap_value, color='r', linestyle='--', label=f'Most Positive Influence: {max_shap_value:.3f} ({max_feature})')
+            plt.axhline(y=min_shap_value, color='g', linestyle='--', label=f'Most Negative Influence: {min_shap_value:.3f} ({min_feature})')
         elif prediction == "flood":
             # Get SHAP values for "flood" prediction
             flood_values = [float(f[2].split()[0]) for f in shap_table]
-            plt.figure(figsize=(10, 6))
+
+            # Get the maximum and minimum SHAP values and their corresponding features
+            max_shap_value, max_feature = max(zip(flood_values, features))
+            min_shap_value, min_feature = min(zip(flood_values, features))
+
+            plt.figure(figsize=(12, 8))
             plt.bar(features, flood_values, label='Features Relevances to Flood')
             plt.xlabel('Features')
             plt.ylabel('SHAP Values')
             plt.title('SHAP Values for Flood Prediction')
+            plt.axhline(y=max_shap_value, color='r', linestyle='--', label=f'Most Positive Influence: {max_shap_value:.3f} ({max_feature})')
+            plt.axhline(y=min_shap_value, color='g', linestyle='--', label=f'Most Negative Influence: {min_shap_value:.3f} ({min_feature})')
         else:
             raise ValueError("Invalid prediction value. Please provide 'no flood' or 'flood'.")
 
         plt.legend()
         plt.xticks(rotation=90)
-        
+        plt.tight_layout()
         
         # Save the plot as an image file
         img_bytes = BytesIO()
@@ -138,6 +156,7 @@ def main():
         print("Prediction:", prediction)
         print("SHAP values:", shap_table)
 
+        # Plot the SHAP values
         result.plot_shap_result(shap_table, prediction[0])
 
     except ValueError as e:
