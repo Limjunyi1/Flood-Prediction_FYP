@@ -1,3 +1,4 @@
+from io import BytesIO
 from pandas import get_dummies
 import WeatherAPI
 import RandomForestModel
@@ -11,6 +12,7 @@ class GetResult:
     Date Created: 2024-04-09
     A class to represent a GetResult object for getting flood prediction results.
     """
+
         
     def __init__(self):
         """
@@ -79,6 +81,8 @@ class GetResult:
         """
         Created by: LimJunYi
         Plot the SHAP values for the prediction result.
+        Modified by: Cheng Tze Pin
+        Output the graph as an image file.
         """
         # Get the predictors
         features = [f[0] for f in shap_table]
@@ -105,7 +109,14 @@ class GetResult:
 
         plt.legend()
         plt.xticks(rotation=90)
-        plt.show()
+        
+        
+        # Save the plot as an image file
+        img_bytes = BytesIO()
+        plt.savefig(img_bytes, format='png')
+        img_bytes.seek(0)
+        
+        return img_bytes
 
     
 def main():
