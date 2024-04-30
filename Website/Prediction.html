@@ -166,7 +166,7 @@
                 })
                 .then(response => response.json())
                 .then(store => {
-                    document.getElementById('result').innerHTML += 'Prediction Result: ' + JSON.stringify(store);
+                    document.getElementById('result').innerHTML += '<br>' + JSON.stringify(store);
                 })
                 .catch(error => {
                     console.error('Error:', error);
