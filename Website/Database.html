@@ -22,11 +22,47 @@
                 <option value="">Select Location</option>
             </select>
         </div>
-        <form action="/action_page.php">
-            <label for="birthday">Date:</label>
-            <input type="date" id="date" name="date" min="" max="">
+        <form action="/action_page.php" id="main-form">
+            <div class="form-group">
+                <label for="selection-type">Select Date Type:</label>
+                <select id="selection-type" name="selection-type">
+                    <option value="month">Month</option>
+                    <option value="month-year">Month and Year</option>
+                    <option value="date">Specific Date</option>
+                    <option value="year">Year Only</option>
+                </select>
+            </div>
+            <div class="form-group" id="month-group">
+                <label for="month">Select Month:</label>
+                <select id="month" name="month">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+            </div>
+            <div class="form-group" id="month-year-group">
+                <label for="month-year">Select Month and Year:</label>
+                <input type="month" id="month-year" name="month-year" min="" max="">
+            </div>
+            <div class="form-group" id="date-group">
+                <label for="date">Select Specific Date:</label>
+                <input type="date" id="date" name="date" min="" max="">
+            </div>
+            <div class="form-group" id="year-group">
+                <label for="year">Select Year:</label>
+                <input type="number" id="year" name="year" min="1900" max="2099">
+            </div>
             <button type="submit" id="submit-btn">Submit</button>
-        </form>
+        </form>               
         <div class="container" id = "shap-table"></div>
     </section>
     <footer>
@@ -36,6 +72,47 @@
     </footer>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to show or hide form groups based on the selection type
+            function toggleFormGroups() {
+                const selectionType = document.getElementById('selection-type').value;
+                const monthGroup = document.getElementById('month-group');
+                const monthYearGroup = document.getElementById('month-year-group');
+                const dateGroup = document.getElementById('date-group');
+                const yearGroup = document.getElementById('year-group');
+
+                // Show or hide form groups based on the selection type
+                if (selectionType === 'month-year') {
+                    monthGroup.style.display = 'none';
+                    monthYearGroup.style.display = 'block';
+                    dateGroup.style.display = 'none';
+                    yearGroup.style.display = 'none';
+                } else if (selectionType === 'month') {
+                    monthGroup.style.display = 'block';
+                    monthYearGroup.style.display = 'none';
+                    dateGroup.style.display = 'none';
+                    yearGroup.style.display = 'none';
+                } else if (selectionType === 'date') {
+                    monthGroup.style.display = 'none';
+                    monthYearGroup.style.display = 'none';
+                    dateGroup.style.display = 'block';
+                    yearGroup.style.display = 'none';
+                } else if (selectionType === 'year') {
+                    monthGroup.style.display = 'none';
+                    monthYearGroup.style.display = 'none';
+                    dateGroup.style.display = 'none';
+                    yearGroup.style.display = 'block';
+                }
+            }
+
+            // Call the toggleFormGroups function when the selection type changes
+            document.getElementById('selection-type').addEventListener('change', toggleFormGroups);
+
+            // Call the toggleFormGroups function on page load to set initial visibility
+            toggleFormGroups();
+        });
+
+
         const locations = ["Barisal", "Bhola", "Bogra", "Chandpur", "Chittagong (City-Ambagan)", "Chittagong (IAP-Patenga)", "Comilla", "Cox's Bazar", "Dhaka", "Dinajpur", "Faridpur", "Feni", "Hatiya", "Ishurdi", "Jessore", "Khepupara", "Khulna",  "Madaripur", "Maijdee Court", "Mongla", "Mymensingh", "Patuakhali", "Rajshahi", "Rangamati", "Rangpur", "Sandwip", "Satkhira", "Sitakunda",  "Sylhet", "Tangail", "Teknaf"];
         const flood = false;
 
