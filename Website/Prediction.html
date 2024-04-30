@@ -27,7 +27,7 @@
             <input type="date" id="date" name="date" min="" max="">
             <button type="submit" id="submit-btn">Submit</button>
         </form>
-        <div class="result" id="result">
+        <div class="container" id="result">
         </div>
         <div class="shap-graph-header">
             <h2>SHAP Table</h2>
@@ -120,12 +120,13 @@
             })
             .then(response => response.json())
             .then(prediction => {
+                clearContainer();
                 if (prediction[0][0] == "flood")
                 {
                     flood = true;
                 }
                 // Display prediction result
-                document.getElementById('dynamic-content').innerHTML = 'Prediction Result: ' + JSON.stringify(prediction[0]);
+                document.getElementById('result').innerHTML = 'Prediction Result: ' + JSON.stringify(prediction[0]);
 
                 const table = createTable(prediction[1]);
                 document.getElementById('shap-table').appendChild(table);
@@ -205,6 +206,12 @@
 
 
         return table;
+    }
+
+    function clearContainer(){
+        document.getElementById('result').innerHTML = '';
+        document.getElementById('shap-table').innerHTML = '';
+        document.getElementById('shap-graph').innerHTML = '';
     }
 
         
