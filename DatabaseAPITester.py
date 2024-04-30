@@ -2,7 +2,7 @@ import unittest
 import requests
 
 class TestAPI(unittest.TestCase):
-    base_url = 'http://localhost:5000/database'  # Update with your API URL
+    base_url = 'http://localhost:8000/database'  # Update with your API URL
 
     def test_get_data(self):
         response = requests.get(self.base_url)

@@ -150,6 +150,28 @@
                     console.error('Error fetching graph:', error);
                     document.getElementById('shap-graph').innerHTML = 'An error occurred while fetching the graph.';
                 });
+
+                // Save Prediction Result to Database
+                fetch("http://127.0.0.1:8000/store", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        city: selectedLocation,
+                        date: selectedDate,
+                        result: JSON.stringify(prediction[0][0]),
+                        probability: JSON.stringify(prediction[0][1])
+                    })
+                })
+                .then(response => response.json())
+                .then(store => {
+                    document.getElementById('result').innerHTML = 'Prediction Result: ' + JSON.stringify(store);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('result').innerHTML = 'An error occurred.' + error  + "Database Error";
+                });
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -157,62 +179,62 @@
             });
         }
 
-    function createTable(data) {
-        const table = document.createElement("table");
+        function createTable(data) {
+            const table = document.createElement("table");
 
-        // Create the table header row
-        const headerRow = document.createElement("tr");
-        
-        // Add column name for the first column only
-        const th1 = document.createElement("th");
-        th1.textContent = "Attributes";
-        headerRow.appendChild(th1);
-        
-        const th2 = document.createElement("th");
-        th2.textContent = "SHAP Value";
-        headerRow.appendChild(th2);
+            // Create the table header row
+            const headerRow = document.createElement("tr");
+            
+            // Add column name for the first column only
+            const th1 = document.createElement("th");
+            th1.textContent = "Attributes";
+            headerRow.appendChild(th1);
+            
+            const th2 = document.createElement("th");
+            th2.textContent = "SHAP Value";
+            headerRow.appendChild(th2);
 
 
-        table.appendChild(headerRow);
+            table.appendChild(headerRow);
 
-        // Loop through each row in the data array (starting from index 1 to skip the column names row)
-        for (let i = 0; i < data.length; i++) {
-            const rowData = data[i];
-            const row = document.createElement("tr");
+            // Loop through each row in the data array (starting from index 1 to skip the column names row)
+            for (let i = 0; i < data.length; i++) {
+                const rowData = data[i];
+                const row = document.createElement("tr");
 
-        // Conditionally select columns based on the value of 'flood'
-        if (flood) {
-            // Take first and third column
-            const cell1 = document.createElement("td");
-            cell1.textContent = rowData[0]; // Assuming first column data is at index 0
-            row.appendChild(cell1);
+            // Conditionally select columns based on the value of 'flood'
+            if (flood) {
+                // Take first and third column
+                const cell1 = document.createElement("td");
+                cell1.textContent = rowData[0]; // Assuming first column data is at index 0
+                row.appendChild(cell1);
 
-            const cell3 = document.createElement("td");
-            cell3.textContent = rowData[2]; // Assuming third column data is at index 2
-            row.appendChild(cell3);
-        } else {
-            // Take first and second column
-            const cell1 = document.createElement("td");
-            cell1.textContent = rowData[0]; // Assuming first column data is at index 0
-            row.appendChild(cell1);
+                const cell3 = document.createElement("td");
+                cell3.textContent = rowData[2]; // Assuming third column data is at index 2
+                row.appendChild(cell3);
+            } else {
+                // Take first and second column
+                const cell1 = document.createElement("td");
+                cell1.textContent = rowData[0]; // Assuming first column data is at index 0
+                row.appendChild(cell1);
 
-            const cell2 = document.createElement("td");
-            cell2.textContent = rowData[1]; // Assuming second column data is at index 1
-            row.appendChild(cell2);
+                const cell2 = document.createElement("td");
+                cell2.textContent = rowData[1]; // Assuming second column data is at index 1
+                row.appendChild(cell2);
+            }
+
+            table.appendChild(row);
+            }
+
+
+            return table;
         }
 
-        table.appendChild(row);
+        function clearContainer(){
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('shap-table').innerHTML = '';
+            document.getElementById('shap-graph').innerHTML = '';
         }
-
-
-        return table;
-    }
-
-    function clearContainer(){
-        document.getElementById('result').innerHTML = '';
-        document.getElementById('shap-table').innerHTML = '';
-        document.getElementById('shap-graph').innerHTML = '';
-    }
 
         
         // Adding event listener to the submit button
