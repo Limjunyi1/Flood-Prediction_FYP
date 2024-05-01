@@ -69,7 +69,6 @@ def get_data():
                 query = "SELECT * FROM PREDICTION_RESULT WHERE Month = %s"
                 values = (month,)
             elif not day and not month:
-                print("executed")
                 query = "SELECT * FROM PREDICTION_RESULT WHERE Year = %s"
                 values = (year,)
             elif not day:
@@ -79,8 +78,10 @@ def get_data():
                 query = "SELECT * FROM PREDICTION_RESULT WHERE Year = %s AND Month = %s AND Day = %s"
                 values = (year, month, day)
         else:
-            if not day and not year:
-                print("executed")
+            if not day and not month and not year:
+                query = "SELECT * FROM PREDICTION_RESULT WHERE City = %s"
+                values = (city,)
+            elif not day and not year:
                 query = "SELECT * FROM PREDICTION_RESULT WHERE City = %s AND Month = %s"
                 values = (city, month)
             elif not day and not month:
