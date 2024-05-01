@@ -105,7 +105,16 @@
             event.preventDefault(); // Prevents the default form submission behavior
             
             const selectedLocation = getSelectedLocation();
+            if (!selectedLocation) {
+                alert('Please choose a location.');
+                return;
+            }
             const selectedDate = getSelectedDate();
+            if (!selectedDate) {
+                alert('Please choose a date.');
+                return;
+            }
+
         
             // Your fetch request here
             fetch('http://127.0.0.1:5000/predict', {
