@@ -63,7 +63,7 @@
             </div>
             <button type="submit" id="submit-btn">Submit</button>
         </form>               
-        <div class="container" id = "shap-table"></div>
+        <div class="container" id="past-data"></div>
     </section>
     <footer>
         <div class="footer-content">
@@ -148,6 +148,33 @@
             return selectedDate;
         }
 
+        //Function to get selected month
+        function getSelectedMonth() {
+            const monthInput = document.getElementById('month');
+            const selectedMonth = monthInput.value;
+            // Do something with the selected month
+            console.log('Selected month:', selectedMonth);
+            return selectedMonth;
+        }
+
+        //Function to get selected month and year
+        function getSelectedMonthYear() {
+            const monthYearInput = document.getElementById('month-year');
+            const selectedMonthYear = monthYearInput.value;
+            // Do something with the selected month and year
+            console.log('Selected month and year:', selectedMonthYear);
+            return selectedMonthYear;
+        }
+
+        //Function to get selected year
+        function getSelectedYear() {
+            const yearInput = document.getElementById('year');
+            const selectedYear = yearInput.value;
+            // Do something with the selected year
+            console.log('Selected year:', selectedYear);
+            return selectedYear;
+        }
+
         document.getElementById('date').addEventListener('change', getSelectedDate);
 
         // Function to set min and max dates for the date input field
@@ -168,109 +195,104 @@
         // Function to handle form submission
         function handleFormSubmit(event) {
             event.preventDefault(); // Prevents the default form submission behavior
-            
-            const selectedLocation = getSelectedLocation();
-            const selectedDate = getSelectedDate();
+            const selectionType = document.getElementById('selection-type').value;
+            if (getSelectedLocation() == '' ){
+                selectedLocation = null;
+            }
+            else {
+                selectedLocation = getSelectedLocation();
+            }
+            selectedYear = null;
+            selectedMonth = null;
+            selectedDay = null;
+
+            // Show or hide form groups based on the selection type
+            if (selectionType === 'month-year') {
+                monthyear = getSelectedMonthYear();
+                selectedYear = monthyear.split('-')[0];
+                selectedMonth = monthyear.split('-')[1];
+            } else if (selectionType === 'month') {
+               selectedMonth = getSelectedMonth();
+            } else if (selectionType === 'date') {
+                getSelectedDate();
+                selectedYear = getSelectedDate().split('-')[0];
+                selectedMonth = getSelectedDate().split('-')[1];
+                selectedDay = getSelectedDate().split('-')[2];                
+            } else if (selectionType === 'year') {
+                selectedYear = getSelectedYear();
+            }
         
-            // Your fetch request here
-            fetch('http://127.0.0.1:5000/predict', {
+             // fetch the data from the database
+            const data = {
+                city: selectedLocation,
+                year: selectedYear,
+                month: selectedMonth,
+                day: selectedDay
+            };
+
+            console.log(data); // Print the data to the console
+
+            fetch('http://127.0.0.1:8000/get_data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    city: selectedLocation,
-                    date: selectedDate
-                })
+                body: JSON.stringify(data)
             })
             .then(response => response.json())
-            .then(prediction => {
-                if (prediction[0][0] == "flood")
-                {
-                    flood = true;
+            .then(get_data => {
+                console.log(get_data);
+                clearContainer();
+                if (get_data.length == 0){
+                    document.getElementById('past-data').innerHTML = 'No data found for the selected location and date.';
+                    return;
                 }
-                // Display prediction result
-                document.getElementById('dynamic-content').innerHTML = 'Prediction Result: ' + JSON.stringify(prediction[0]);
-
-                const table = createTable(prediction[1]);
-                document.getElementById('shap-table').appendChild(table);
-
-                // Fetch graph
-                fetch('http://127.0.0.1:5000/graph')
-                .then(response => response.blob())
-                .then(blob => {
-                    // Convert blob to URL
-                    const imageUrl = URL.createObjectURL(blob);
-                    
-                    // Create an image element
-                    const imageElement = document.createElement('img');
-                    imageElement.src = imageUrl;
-
-                    // Append image to the DOM
-                    document.getElementById('shap-graph').innerHTML = '';
-                    document.getElementById('shap-graph').appendChild(imageElement);
-                })
-                .catch(error => {
-                    console.error('Error fetching graph:', error);
-                    document.getElementById('shap-graph').innerHTML = 'An error occurred while fetching the graph.';
-                });
+            
+                const table = createTable(get_data);
+                document.getElementById('past-data').appendChild(table);
             })
             .catch(error => {
                 console.error('Error:', error);
                 document.getElementById('result').innerHTML = 'An error occurred.' + error;
             });
+            
+
         }
 
-    function createTable(data) {
-        const table = document.createElement("table");
+        function createTable(data) {
+            const table = document.createElement("table");
 
-        // Create the table header row
-        const headerRow = document.createElement("tr");
-        
-        // Add column name for the first column only
-        const th1 = document.createElement("th");
-        th1.textContent = "Attributes";
-        headerRow.appendChild(th1);
-        
-        const th2 = document.createElement("th");
-        th2.textContent = "SHAP Value";
-        headerRow.appendChild(th2);
+            // Create the table header row
+            const headerRow = document.createElement("tr");
+            const headers = ["City", "Year", "Month", "Day", "Result", "Probability", "Prediction Made"];
+            
+            headers.forEach(header => {
+                const th = document.createElement("th");
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
 
+            table.appendChild(headerRow);
 
-        table.appendChild(headerRow);
+            // Create a row for each data entry
+            data.forEach(entry => {
+                const row = document.createElement("tr");
 
-        // Loop through each row in the data array (starting from index 1 to skip the column names row)
-        for (let i = 0; i < data.length; i++) {
-            const rowData = data[i];
-            const row = document.createElement("tr");
+                entry.forEach(column => {
+                    const td = document.createElement("td");
+                    td.textContent = column;
+                    row.appendChild(td);
+                });
 
-        // Conditionally select columns based on the value of 'flood'
-        if (flood) {
-            // Take first and third column
-            const cell1 = document.createElement("td");
-            cell1.textContent = rowData[0]; // Assuming first column data is at index 0
-            row.appendChild(cell1);
+                table.appendChild(row);
+            });
 
-            const cell3 = document.createElement("td");
-            cell3.textContent = rowData[2]; // Assuming third column data is at index 2
-            row.appendChild(cell3);
-        } else {
-            // Take first and second column
-            const cell1 = document.createElement("td");
-            cell1.textContent = rowData[0]; // Assuming first column data is at index 0
-            row.appendChild(cell1);
-
-            const cell2 = document.createElement("td");
-            cell2.textContent = rowData[1]; // Assuming second column data is at index 1
-            row.appendChild(cell2);
+            return table;
         }
 
-        table.appendChild(row);
+        function clearContainer(){
+            document.getElementById('past-data').innerHTML = '';
         }
-
-
-        return table;
-    }
 
         
         // Adding event listener to the submit button

@@ -1,3 +1,4 @@
+from collections import OrderedDict
 import datetime
 from flask import Flask, jsonify, request
 import mysql.connector
@@ -49,6 +50,57 @@ def store():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
+@app.route('/get_data', methods=['POST'])
+def get_data():
+    try:
+        data = request.json
+        print(data)
+        city = data['city']
+        year = data['year']
+        month = data['month']
+        day = data['day']
+
+        print(city, year, month, day)
+
+        cursor = conn.cursor()
+        if not city:
+            if not day and not year:
+                query = "SELECT * FROM PREDICTION_RESULT WHERE Month = %s"
+                values = (month,)
+            elif not day and not month:
+                print("executed")
+                query = "SELECT * FROM PREDICTION_RESULT WHERE Year = %s"
+                values = (year,)
+            elif not day:
+                query = "SELECT * FROM PREDICTION_RESULT WHERE Year = %s AND Month = %s"
+                values = (year, month)
+            else:
+                query = "SELECT * FROM PREDICTION_RESULT WHERE Year = %s AND Month = %s AND Day = %s"
+                values = (year, month, day)
+        else:
+            if not day and not year:
+                print("executed")
+                query = "SELECT * FROM PREDICTION_RESULT WHERE City = %s AND Month = %s"
+                values = (city, month)
+            elif not day and not month:
+                query = "SELECT * FROM PREDICTION_RESULT WHERE City = %s AND Year = %s"
+                values = (city, year)
+            elif not day:
+                query = "SELECT * FROM PREDICTION_RESULT WHERE City = %s AND Year = %s AND Month = %s"
+                values = (city, year, month)
+            else:
+                query = "SELECT * FROM PREDICTION_RESULT WHERE City = %s AND Year = %s AND Month = %s AND Day = %s"
+                values = (city, year, month, day)
+        cursor.execute(query, values)
+        data = [list(row) for row in cursor.fetchall()]
+        cursor.close()
+
+        print(data)
+
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
     
 
 
