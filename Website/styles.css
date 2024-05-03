@@ -62,7 +62,8 @@ h2 {
 }
 
 footer {
-    bottom:0;
+    position: absolute;
+    bottom:0%;
     color: #fff;
     padding: 20px;
     text-align: right;
@@ -104,4 +105,12 @@ footer {
     -webkit-box-shadow: 0 0 10px 3596cf, 0 0 40px 3596cf, 0 0 80px 3596cf;
     /* background-color: #3596cf; */
     box-shadow: 0 0 10px #cf649a, 0 0 40px #cf649a, 0 0 80px #cf649a;
+}
+
+form{
+    padding: 10px;
+}
+
+.form-group{
+    padding: 10px;
 }
