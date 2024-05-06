@@ -3,6 +3,7 @@ import datetime
 from flask import Flask, jsonify, request
 import mysql.connector
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 
@@ -12,9 +13,13 @@ CORS(app)
 db_config = {
     'host': 'flood-prediction-fyp.mysql.database.azure.com',
     'user': 'actp',
-    'password': '!Q2w#E4r%T',
+    'password': os.environ.get('DB_PASSWORD'),
     'database': 'flood_data',
 }
+
+# Check if password is None
+if db_config['password'] is None:
+    raise ValueError("Please set up DB_PASSWORD environment variable in your system")
 
 # Connect to MySQL
 conn = mysql.connector.connect(**db_config)
