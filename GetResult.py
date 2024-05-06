@@ -4,6 +4,7 @@ import WeatherAPI
 import RandomForestModel
 import datetime
 import shap
+import os
 import matplotlib.pyplot as plt
 
 class GetResult:
@@ -13,13 +14,13 @@ class GetResult:
     A class to represent a GetResult object for getting flood prediction results.
     """
 
-        
     def __init__(self):
         """
         Created by: LimJunYi
         Initialization for the GetResult object.
         """
-        self.weather_api = WeatherAPI.WeatherAPI("93de58fb29a54413a6064558240804")
+        self.weather_api = WeatherAPI.WeatherAPI(os.environ.get("WEATHER_API_KEY"))
+        print("Weather API Key:", os.environ.get("WEATHER_API_KEY"))
         self.model = RandomForestModel.RandomForestModel()
         
     def preprocess_data(self, weather_data):
@@ -148,7 +149,7 @@ def main():
 
     # Get user input
     city = "Dhaka"
-    date = "2024-05-01"
+    date = "2024-05-10"
 
     try:
         # Get the prediction result and SHAP values
