@@ -19,6 +19,7 @@ class GetResult:
         Created by: LimJunYi
         Initialization for the GetResult object.
         """
+        # Please set the environment variable 'WEATHER_API_KEY' with the API key in ur system!!!
         self.weather_api = WeatherAPI.WeatherAPI(os.environ.get("WEATHER_API_KEY"))
         print("Weather API Key:", os.environ.get("WEATHER_API_KEY"))
         self.model = RandomForestModel.RandomForestModel()
