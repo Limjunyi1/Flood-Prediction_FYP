@@ -1,6 +1,7 @@
 import requests
 from datetime import datetime, timedelta
 import pandas as pd
+import os
 
 # WeatherAPI class to get current and forecast weather data
 class WeatherAPI:
@@ -133,8 +134,13 @@ class WeatherAPI:
 
 # Main function to test the WeatherAPI class
 def __main__():
+
+    # Check if the API key is None
+    if os.environ.get("WEATHER_API_KEY") is None:
+        raise ValueError("Please set up the 'WEATHER_API_KEY' environment variable with your API key.")
+        
     # Create an instance of WeatherAPI class
-    weather = WeatherAPI("93de58fb29a54413a6064558240804")
+    weather = WeatherAPI(os.environ.get("WEATHER_API_KEY"))
     city = "Chittagong (IAP-Patenga)"
 
     weather = weather.get_weather_data(city, 3)
