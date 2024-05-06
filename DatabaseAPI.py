@@ -19,7 +19,7 @@ db_config = {
 
 # Check if password is None
 if db_config['password'] is None:
-    raise ValueError("Please set up DB_PASSWORD environment variable in your system")
+    raise ValueError("Please set up DB_PASSWORD environment variable in your system !!!")
 
 # Connect to MySQL
 conn = mysql.connector.connect(**db_config)
