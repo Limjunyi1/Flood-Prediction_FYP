@@ -69,7 +69,12 @@ def get_data():
         print(city, year, month, day)
 
         cursor = conn.cursor()
-        if not city:
+        if not city and not day and not month and not year:
+            cursor.execute("SELECT * FROM PREDICTION_RESULT")
+            data = [list(row) for row in cursor.fetchall()]
+            cursor.close()
+            return jsonify(data)
+        elif not city:
             if not day and not year:
                 query = "SELECT * FROM PREDICTION_RESULT WHERE Month = %s"
                 values = (month,)
