@@ -19,9 +19,12 @@ class GetResult:
         Created by: LimJunYi
         Initialization for the GetResult object.
         """
+        # Check if the API key is None
+        if os.environ.get("WEATHER_API_KEY") is None:
+            raise ValueError("Please set up the 'WEATHER_API_KEY' environment variable with your API key.")
+        
         # Please set the environment variable 'WEATHER_API_KEY' with the API key in ur system!!!
         self.weather_api = WeatherAPI.WeatherAPI(os.environ.get("WEATHER_API_KEY"))
-        print("Weather API Key:", os.environ.get("WEATHER_API_KEY"))
         self.model = RandomForestModel.RandomForestModel()
         
     def preprocess_data(self, weather_data):
