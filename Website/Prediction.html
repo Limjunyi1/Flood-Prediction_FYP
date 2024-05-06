@@ -27,16 +27,41 @@
             <input type="date" id="date" name="date" min="" max="">
             <button type="submit" id="submit-btn">Submit</button>
         </form>
+        <div class="Result-header">
+            <h2>Prediction Result</h2>
+        </div>
         <div class="container" id="result">
         </div>
         <div class="shap-graph-header">
             <h2>SHAP Table</h2>
+            <div class="shap-paragraph">
+                <p>
+                    The table lists SHAP (SHapley Additive exPlanations) values for various features in a predictive model, 
+                    indicating how each feature contributes to the model's predictions. A positive SHAP value means a feature increases the prediction, 
+                    while a negative value indicates a decrease. The magnitude of these values shows the strength of their impact. 
+                    The features range from continuous variables like temperature to categorical variables like geographical locations, 
+                    each affecting the model's output uniquely. By analyzing these values, 
+                    we an understand which features are most important and how they influence the predictions.
+                </p>
+            </div>
         </div>
         <div class="container" id = "shap-table"></div>
         <div class="shap-graph-header">
             <h2>SHAP Graph</h2>
+            <div class="shap-plot-explain"></div>
+                <div class="shap-plot-explain">
+                    <p>
+                        This SHAP plot visualizes the impact of different features on a model predicting the likelihood of flood events. 
+                        Features above the horizontal axis positively influence the prediction, 
+                        indicating a higher likelihood of this prediction result when these feature values increase. Conversely, 
+                        features below the axis negatively affect the prediction. 
+                        The magnitude of each bar shows the strength of each feature's impact on the model's output. 
+                        This plot helps in understanding which variables are key drivers in the flood prediction model and how they relate to the likelihood of this prediction result.
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="container" id="shap-graph"></div>
+        <div class="container_shap" id="shap-graph" style="overflow: hidden;">
     </section>
     <footer>
         <div class="footer-content">

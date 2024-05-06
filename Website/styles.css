@@ -47,6 +47,16 @@ header {
     background-color:#3596cf;
 }
 
+.container_shap {
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    background-color:#3596cf;
+}
+
 .result{
     width: 30%;
     margin: 0 auto;
@@ -113,4 +123,16 @@ form{
 
 .form-group{
     padding: 10px;
+}
+
+.shap-paragraph{
+    text-align: center;
+    width: 50%;
+    margin: auto;
+}
+
+.shap-plot-explain{
+    text-align: center;
+    width: 50%;
+    margin: auto;
 }
