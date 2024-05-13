@@ -56,7 +56,7 @@ header {
 }
 
 footer {
-    position: absolute;
+    position: fit-content;
     color: #fff;
     padding: 20px;
     text-align: right;

@@ -5,7 +5,7 @@ body {
     background-image: url('flood1.png'); 
     background-size: cover;
     background-position: center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
+    /* background-repeat: no-repeat; Prevent the image from repeating */
     height: 100vh;
     background-blend-mode:saturation;
     background-color: rgba(0, 0, 255, 0.5);
@@ -72,7 +72,7 @@ h2 {
 }
 
 footer {
-    position: absolute;
+    position: fit-content;
     bottom:0%;
     color: #fff;
     padding: 20px;
