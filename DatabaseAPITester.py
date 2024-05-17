@@ -8,10 +8,10 @@ class TestGetData(unittest.TestCase):
     def test_get_data(self):
         # Define the data to send
         data = {
-            'city': 'Dhaka',
+            'city': 'Sylhet',
             'year': '2024',
             'month': '5',
-            'day': None
+            'day': '28'
         }
 
         # Send a POST request to the /get_data endpoint
