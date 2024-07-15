@@ -153,11 +153,12 @@ def main():
 
     # Get user input
     city = "Dhaka"
-    date = "2024-05-10"
+    date = "2024-05-31"
 
     try:
         # Get the prediction result and SHAP values
         prediction, shap_table = result.get_prediction_result(city, date)
+        print("Prediction Date:", date)
         print("Prediction:", prediction)
         print("SHAP values:", shap_table)
 

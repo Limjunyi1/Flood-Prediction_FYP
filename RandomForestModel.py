@@ -134,16 +134,17 @@ def main():
 
     # Evaluate the model and get the accuracy score
     accuracy = model.evaluate(X_test, y_test)
+    print(f"Sample Dataset: {X_test.head()}")
     print(f"Accuracy: {accuracy}")
 
     # Get the feature importances
-    feature_importances = model.get_feature_importance()
+    # feature_importances = model.get_feature_importance()
 
-    # Sort the feature importances in descending order
-    sorted_importances = sorted(zip(X_test.columns, feature_importances), key=lambda x: x[1], reverse=True)
-    print("Feature Importances:")
-    for feature, importance in sorted_importances:
-        print(f"{feature}: {importance}")
+    # # Sort the feature importances in descending order
+    # sorted_importances = sorted(zip(X_test.columns, feature_importances), key=lambda x: x[1], reverse=True)
+    # print("Feature Importances:")
+    # for feature, importance in sorted_importances:
+    #     print(f"{feature}: {importance}")
     
 
 if __name__ == "__main__":

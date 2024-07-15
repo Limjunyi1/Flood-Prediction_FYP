@@ -12,7 +12,7 @@ CORS(app)
 # MySQL configurations
 db_config = {
     'host': 'flood-prediction-fyp.mysql.database.azure.com',
-    'user': 'actp',
+    'user': 'jlim0199',
     'password': os.environ.get('DB_PASSWORD'),
     'database': 'flood_data',
 }
